@@ -1,0 +1,123 @@
+#image switcher using two button
+
+
+
+MainActivity.java
+-------------------------
+
+package com.example.imageswitch;
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+
+public class MainActivity extends AppCompatActivity {
+    ImageButton beforeButton, nextButton;
+    private ImageView[] images;
+    private int current = 0;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
+        beforeButton = findViewById(R.id.beforeButton);
+        nextButton = findViewById(R.id.nextButton);
+        images = new ImageView[]{
+                findViewById(R.id.image1),
+                findViewById(R.id.image2),
+                findViewById(R.id.image3)
+        };
+
+        nextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                images[current].setVisibility(View.GONE);
+                current = (current + 1)% images.length;
+                images[current].setVisibility(View.VISIBLE);
+            }
+        });
+
+
+        beforeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                images[current].setVisibility(View.GONE);
+                current = (current-1 + images.length) % images.length;
+                images[current].setVisibility(View.VISIBLE);
+
+            }
+        });
+ }
+}
+
+
+
+-------------------------
+activity_main.xml
+-------------------------
+
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+
+<FrameLayout
+    android:layout_width="250dp"
+    android:layout_gravity="center"
+    android:id="@+id/framelayout"
+    android:layout_height="250dp">
+
+    <ImageView
+        android:id="@+id/image1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/image1"
+        android:visibility="visible"
+        android:inAnimation="@android:anim/slide_in_left" />
+    <ImageView
+        android:id="@+id/image2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/image2"
+        android:visibility="gone"
+        android:inAnimation="@android:anim/slide_in_left" />
+    <ImageView
+        android:id="@+id/image3"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/image3"
+        android:inAnimation="@android:anim/slide_in_left" />
+</FrameLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center">
+
+
+    <ImageButton
+        android:id="@+id/beforeButton"
+        android:background="@android:color/transparent"
+        android:layout_width="70dp"
+        android:src="@drawable/outline_arrow_left_24"
+        android:layout_height="70dp" />
+
+    <ImageButton
+        android:id="@+id/nextButton"
+        android:background="@android:color/transparent"
+        android:layout_width="70dp"
+        android:src="@drawable/outline_arrow_right_24"
+        android:layout_height="70dp"/>
+</LinearLayout>
+</LinearLayout>

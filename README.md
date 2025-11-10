@@ -1,3 +1,4 @@
-Remove-Item (Get-PSReadLineOption).HistorySavePath,
-rm -r -Force AD
+Remove-Item (Get-PSReadLineOption).HistorySavePath  ,  
+rm -r -Force AD 
+
 

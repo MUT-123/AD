@@ -1,0 +1,96 @@
+
+MainActivity.java
+----------------------------------------
+
+public class MainActivity extends AppCompatActivity {
+
+    Button btnadd,btnminus,btnmul,btndiv;
+    EditText num1,num2;
+    TextView result;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
+
+        btnadd=findViewById(R.id.button1);
+        btnminus=findViewById(R.id.button2);
+        btnmul=findViewById(R.id.button3);
+        btndiv=findViewById(R.id.button4);
+
+        num1=findViewById(R.id.editnum1);
+        num2=findViewById(R.id.editnum2);
+        result=findViewById(R.id.textResult);
+
+        btnadd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              Double number1=Double.parseDouble(num1.getText().toString());
+              Double number2=Double.parseDouble(num2.getText().toString());
+              Double total=number1+number2;
+              Intent intent=new Intent(MainActivity.this, Result.class);
+              intent.putExtra("res",total);
+              startActivity(intent);
+
+            }
+        });
+
+
+        btnminus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Double number1=Double.parseDouble(num1.getText().toString());
+                Double number2=Double.parseDouble(num2.getText().toString());
+                Double total=number1-number2;
+                Intent intent=new Intent(MainActivity.this, Result.class);
+                intent.putExtra("res",total);
+                startActivity(intent);
+            }
+        });
+
+        btnmul.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Double number1=Double.parseDouble(num1.getText().toString());
+                Double number2=Double.parseDouble(num2.getText().toString());
+                Double total=number1*number2;
+                Intent intent=new Intent(MainActivity.this, Result.class);
+                intent.putExtra("res",total);
+                startActivity(intent);
+
+            }
+        });
+
+        btndiv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Double number1=Double.parseDouble(num1.getText().toString());
+                Double number2=Double.parseDouble(num2.getText().toString());
+                Intent intent=new Intent(MainActivity.this, Result.class);
+                startActivity(intent);
+                if (number2==0) {
+                    Toast.makeText(MainActivity.this, "Number2 cannot be zero", Toast.LENGTH_SHORT).show();
+                } else {
+                    Double total=number1/number2;
+                    intent.putExtra("res",total);
+                }
+            }
+        });
+
+    }
+
+
+public class Result extends AppCompatActivity {
+
+    TextView result;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_result);
+
+        result=findViewById(R.id.resulttext);
+        Double results=getIntent().getDoubleExtra("res",0.0);
+        result.setText("Result="+results);
+    }

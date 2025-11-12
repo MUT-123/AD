@@ -1,0 +1,44 @@
+public class MainActivity extends AppCompatActivity {
+    CheckBox chkmusic, chksports, chknetwork, chktravel, chkmovies;
+    Button btn;
+    ListView Listselected;
+    ArrayList<String> selctedintrest;
+    ArrayAdapter<String> adapter;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_main);
+
+        chkmusic = findViewById(R.id.checkBox1);
+        chksports = findViewById(R.id.checkBox2);
+        chktravel = findViewById(R.id.checkBox3);
+        chkmovies = findViewById(R.id.checkBox4);+	
+        chknetwork = findViewById(R.id.checkBox5);
+        Listselected = findViewById(R.id.ListView);
+        btn = findViewById(R.id.button);
+
+        selctedintrest = new ArrayList<>();
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, selctedintrest);
+        Listselected.setAdapter(adapter);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (chkmusic.isChecked()) selctedintrest.add("Music");
+                if (chksports.isChecked()) selctedintrest.add("sports");
+                if (chktravel.isChecked()) selctedintrest.add("Travel");
+                if (chkmovies.isChecked()) selctedintrest.add("Movies");
+                if (chknetwork.isChecked()) selctedintrest.add("Network");
+
+                if (selctedintrest.isEmpty()) {
+                    Toast.makeText(MainActivity.this, "select atleast one intrest", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(MainActivity.this, "Intrest updated", Toast.LENGTH_SHORT).show();
+                }
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+}
